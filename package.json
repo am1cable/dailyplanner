@@ -13,6 +13,8 @@
     "lodash": "^4.17.15",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-imask": "^6.0.5",
+    "react-number-format": "^4.4.1",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5"
@@ -21,7 +23,8 @@
     "@babel/core": "^7.10.0",
     "babel-preset-nano-react-app": "^0.1.0",
     "parcel-bundler": "^1.12.4",
-    "redux-devtools": "^3.5.0"
+    "redux-devtools": "^3.5.0",
+    "sass": "^1.26.5"
   },
   "babel": {
     "presets": [
