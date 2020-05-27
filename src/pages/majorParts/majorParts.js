@@ -1,7 +1,42 @@
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
+import PageWrapper from "../../components/pageWrapper/pageWrapper";
+import { TYPE_OF_DAY } from "../pageUrls";
+import { useSelector, useDispatch } from "react-redux";
+import TextInput from "../../components/input/textInput";
+import DeleteIcon from '@material-ui/icons/Delete';
+import { IconButton } from "@material-ui/core";
 
 export const MajorParts = () => {
+    const currentDay = useSelector(state => state.currentDayData);
+    const dispatch = useDispatch();
+    const [majorParts, setMajorParts] = useState([]);
 
-    return <div>type of day</div>
+    useEffect(() => {
+        currentDay.majorParts && setMajorParts([...currentDay.majorParts]);
+    }, [currentDay])
+
+    const createNewMajorPart = value => setMajorParts([...majorParts, value]);
+    const updateMajorPart = index => value => {
+        const newMajorParts = [...majorParts];
+        newMajorParts.splice(index, 1, value);
+        setMajorParts([...newMajorParts]);
+    }
+    const removePart = index => () => {
+        const newMajorParts = [...majorParts];
+        newMajorParts.splice(index, 1);
+        setMajorParts([...newMajorParts]);
+    }
+
+    const renderDeleteButton = (index) => <IconButton onClick={removePart(index)} aria-label="delete">
+        <DeleteIcon fontSize="small" />
+    </IconButton>
+
+    const renderCurrentMajorParts = () => majorParts.map((part, index) => <div key={index}><TextInput text={part} onBlur={updateMajorPart(index)} /> {renderDeleteButton(index)} </div>);
+
+    return <PageWrapper back={{ link: TYPE_OF_DAY }}>
+        <div>What are the major parts of this day? Maximum 7.</div>
+        <div>{renderCurrentMajorParts()}</div>
+        {majorParts.length < 7 && <div> <TextInput text="" clearInput onBlur={createNewMajorPart} /></div>}
+    </PageWrapper>
 }
 export default MajorParts

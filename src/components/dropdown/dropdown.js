@@ -4,13 +4,19 @@ import { FormControl, Select, InputLabel, ClickAwayListener, MenuItem } from "@m
 
 export const Dropdown = ({ label, onBlur, choice, options }) => {
     const [value, setValue] = useState(choice);
-    const onClickAway = () => onBlur(value);
+    const [focused, setFocused] = useState(false);
+    const onClickAway = () => {
+        if (value !== choice && focused){
+            setFocused(false);
+            onBlur(value);
+        }
+    }
     const handleChange = e => setValue(e.target.value);
     const renderDropdownOptions = () => options.map((option, index) => <MenuItem key={index} value={index}>{option}</MenuItem>)
 
-    return <ClickAwayListener onClickAway={onClickAway}>
+    return <ClickAwayListener onClickAway={onClickAway} >
         <FormControl><InputLabel children={label} />
-            <Select autoWidth onChange={handleChange} value={value}>{renderDropdownOptions()}</Select>
+            <Select onClick={() => setFocused(true)} autoWidth onChange={handleChange} value={value}>{renderDropdownOptions()}</Select>
         </FormControl>
     </ClickAwayListener>
 }

@@ -1,7 +1,8 @@
 const defaultState = {
     dayTypeOptions: ["Workday", "Housework / Chores", "Free", "Other"],
     dayTypeChoice: 0,
-    dayTypeChoiceOther: ""
+    dayTypeChoiceOther: "",
+    dayTypeDetails: []
 
 };
 

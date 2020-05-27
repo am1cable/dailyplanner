@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@material-ui/core";
 import { Link } from 'react-router-dom';
 
-const NavButton = ({ disabled, text, link, ...props }) => <Button {...props} variant="contained" disabled={disabled} component={Link} to={link}>{text}</Button>
+const NavButton = ({ text, link, ...props }) => <Button {...props} variant="contained" component={Link} to={link}>{text}</Button>
 
 export const NavButtons = ({ back, forward }) => {
     return <div>
