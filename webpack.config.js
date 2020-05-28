@@ -1,7 +1,19 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
+      optimization: {
+        splitChunks: {
+          cacheGroups: {
+            commons: {
+              test: /[\\/]node_modules[\\/]/,
+              name: "vendors",
+              chunks: "all"
+            }
+          }
+        }
+      },
   module: {
     rules: [
       {
@@ -30,10 +42,11 @@ module.exports = {
       }
     ]
   },
-  plugins: [
+  plugins: [   
     new HtmlWebPackPlugin({
       template: './src/index.html',
       filename: './index.html'
-    })
+    }),
+    new CleanWebpackPlugin()
   ]
 };
