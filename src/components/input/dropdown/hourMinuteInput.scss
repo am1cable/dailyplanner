@@ -1,6 +1,7 @@
-.hourMinuteInput {
+.hourminute-input {
     display: flex;
-    > div {
-        width: 65px;
+
+    .dropdown {
+        min-width: 65px;
     }
 }

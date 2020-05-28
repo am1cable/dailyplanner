@@ -1,0 +1,9 @@
+.start-day{
+    .hourminute-input{
+        display: flex;
+        justify-content: center;
+        >div{
+            max-width: 100px;
+        }
+    }
+}
