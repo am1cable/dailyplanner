@@ -65,8 +65,8 @@ export const StartTimes = () => {
         doc.save();
     }
 
-    const generateUnformattedSchedule = () => getScheduleByHours().map((time, index) => `${time.hour}:${time.minutes} ${time.ampm} - ${currentDay.majorParts[index] || "Sleep"}\n`).reduce((finalText, text) => finalText + text, "")
-    const renderScheduleByHours = () => getScheduleByHours().map((time, index) => <div key={index}>{time.hour}:{time.minutes} {time.ampm} - {currentDay.majorParts[index] || "Sleep"} </div>)
+    const generateUnformattedSchedule = () => getScheduleByHours().map((time, index) => `${time.hour}:${time.minutes} ${time.ampm} - ${currentDay.majorParts.find(part => part.id === duration.id).name || "Sleep"}\n`).reduce((finalText, text) => finalText + text, "")
+    const renderScheduleByHours = () => getScheduleByHours().map((time, index) => <div key={index}>{time.hour}:{time.minutes} {time.ampm} - {currentDay.majorParts.find(part => part.id === duration.id).name || "Sleep"} </div>)
 
     return <PageWrapper back={{ link: START_OF_DAY }}>
         <p>start times</p>

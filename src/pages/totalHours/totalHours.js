@@ -9,7 +9,7 @@ import { getTimes } from "../../utils/timeline";
 
 export const TotalHours = () => {
     const currentDay = useSelector(state => state.currentDayData);
-    const calculateTime = () => getTimes({sleep: currentDay.hoursOfSleep, activities: currentDay.majorPartDurations});
+    const calculateTime = () => getTimes({ sleep: currentDay.hoursOfSleep, activities: currentDay.majorPartDurations });
     const isOverHours = () => calculateTotals > 24;
     const isUnderHours = () => calculateTotals < 24;
 
@@ -22,13 +22,13 @@ export const TotalHours = () => {
     }, [currentDay]);
 
     const calculateHours = () => calculateTime().reduce((total, activity) => {
-        const newHours = {hours : total.hours + parseInt(activity.hours), minutes: total.minutes + parseInt(activity.minutes)};
+        const newHours = { hours: total.hours + parseInt(activity.hours), minutes: total.minutes + parseInt(activity.minutes) };
         if (newHours.minutes === 60) {
-            newHours.hours ++;
+            newHours.hours++;
             newHours.minutes = 0;
         }
         return newHours;
-    }, {hours: 0, minutes: 0})
+    }, { hours: 0, minutes: 0 })
 
     const renderDecimalAsHourMinutes = (number) => {
         if (number < 1) return `30 minutes`;
@@ -41,10 +41,13 @@ export const TotalHours = () => {
 
     const renderDisplayTotals = () => {
         return <List>
-            {calculateTime().map((duration, index) => <ListItem key={index}><ListItemText primary={currentDay.majorParts[index] || "Sleep"} secondary={`${duration.hours} hour${duration.hours > 1 ? 's':''}${duration.minutes === "30"? `, ${duration.minutes} minutes` : ''}`}/></ListItem>)}
+            {calculateTime().map((duration, index) =>
+                <ListItem key={index}>
+                    <ListItemText primary={(currentDay.majorParts.find(part => part.id === duration.id) || []).name || "Sleep"} secondary={`${duration.hours} hour${duration.hours > 1 ? 's' : ''}${duration.minutes === "30" ? `, ${duration.minutes} minutes` : ''}`} />
+                </ListItem>)}
         </List>
     }
-    return <PageWrapper back={{ link: HOURS_OF_SLEEP }} forward={{disabled: isOverHours() || isUnderHours(), link: START_OF_DAY}}>
+    return <PageWrapper back={{ link: HOURS_OF_SLEEP }} forward={{ disabled: isOverHours() || isUnderHours(), link: START_OF_DAY }}>
         <div><p>Your total time planned is {calculateHours().hours} hours{calculateHours().minutes !== 0 ? ` and ${calculateHours().minutes} minutes` : ""}.</p></div>
         {isOverHours() ? <Alert severity="error">Your total hours planned are over by {renderDecimalAsHourMinutes(calculateTotals - 24)}.</Alert> : null}
         {isUnderHours() ? <Alert severity="warning">Your total hours planned are short by {renderDecimalAsHourMinutes(24 - calculateTotals)}.</Alert> : null}

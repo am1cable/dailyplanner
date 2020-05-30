@@ -1,23 +1,32 @@
-import { TextField, ClickAwayListener } from "@material-ui/core"
+import { TextField } from "@material-ui/core"
 import React, { useState, useEffect } from "react";
 import "./textInput.scss";
 
-export const TextInput = ({ text = "", label, onBlur = () => {}, clearInput = false, className, ...props}) => {
+export const TextInput = ({ text = "", label, onBlur = () => {}, onChange = () => {}, clearInput = false, className, ...props }) => {
     const [value, setValue] = useState(text);
-    const [focused, setFocused] = useState(false);
-    useEffect(() => setValue(text), [text]);
-
-    const handleChange = e => setValue(e.target.value);
-    const onClickAway = () => {
-        if (value !== text && focused) {
-            const finalValue = value;
-            clearInput && setValue(text);
-            setFocused(false);
-            onBlur(finalValue);
+    const handleChange = e => setValue(e.target.value)
+    const catchReturn = (e) => {
+        if (e.key === 'Enter') {
+            setValue(e.target.value);
+            e.preventDefault();
+            document.activeElement.blur();
         }
-    };
+    }
+    const cleanUp = () => {
+        clearInput && setValue(text);
+        if (value !== text) onBlur(value);
+    }
 
-    return <ClickAwayListener onClickAway={onClickAway} ><TextField {...props} className={`text-input${className ? " "+ className : ''}`} onClick={() => setFocused(true)} label={label} value={value} onChange={handleChange} /></ClickAwayListener>;
+    useEffect(() => setValue(text), [text]);
+    useEffect(() => {
+        function sendValue() {
+            if (value !== text) onChange(value);
+        }
+        sendValue();
+        return sendValue;
+    }, [value]);
+
+    return <TextField {...props} onKeyPress={catchReturn} className={`text-input${className ? " " + className : ''}`} onBlur={cleanUp} label={label} value={value} onChange={handleChange} />;
 }
 
 export default TextInput;

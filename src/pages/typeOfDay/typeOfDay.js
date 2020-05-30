@@ -13,17 +13,18 @@ export const TypeOfDay = () => {
     const dropdownDayTypes = () => pageData.dayTypeOptions.filter(o => o !== '');
 
     const handleTypeChange = value => {
-        dispatch(saveAll({ ...pageData, dayTypeChoice: value }));
-        updateCurrentType();
+        updateAllTypes({ ...pageData, dayTypeChoice: value });
     }
     const handleOtherChange = value => {
         const newDayTypeOptions = [...pageData.dayTypeOptions];
         newDayTypeOptions.splice(pageData.dayTypeOptions.length - 1, 0, value);
-        dispatch(saveAll({ ...pageData, dayTypeOptions: newDayTypeOptions, dayTypeChoice: newDayTypeOptions.length - 2 }));
-        updateCurrentType();
+        updateAllTypes({ ...pageData, dayTypeOptions: newDayTypeOptions, dayTypeChoice: newDayTypeOptions.length - 2 });
     };
 
-    const updateCurrentType = () => dispatch(setDay(pageData.dayTypeDetails.find(detail => detail.type === pageData.dayTypeChoice) || { type: pageData.dayTypeChoice }));
+    const updateAllTypes = (props) => {
+        dispatch(saveAll({ ...props, dayTypeDetails: [...pageData.dayTypeDetails.filter(details => details.type !== currentDay.type), currentDay] }));
+        dispatch(setDay(pageData.dayTypeDetails.find(detail => detail.type === pageData.dayTypeChoice) || { type: pageData.dayTypeChoice }));
+    }
 
     const renderOtherChoice = () => <div>
         {pageData.dayTypeChoice === (pageData.dayTypeOptions.length - 1) ?

@@ -9,7 +9,7 @@ import HourMinuteInput from "../../components/input/dropdown/hourMinuteInput";
 export const HoursOfSleep = () => {
     const currentDay = useSelector(state => state.currentDayData);
     const dispatch = useDispatch();
-    const [hoursOfSleep, setHoursOfSleep] = useState(currentDay.hoursOfSleep || {hours: "", minutes: ""});
+    const [hoursOfSleep, setHoursOfSleep] = useState(currentDay.hoursOfSleep || {hours: 5, minutes: 0});
     const isMissingHours = useMemo(() => hoursOfSleep.hours === "" || hoursOfSleep.minutes === "", [hoursOfSleep]);
     
     useEffect(() => {

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import NavButtons from "../navButtons/navButtons";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, Redirect } from "react-router-dom";
 import { TYPE_OF_DAY } from "../../pages/pageUrls";
 import { useSelector } from "react-redux";
 import { Container, Box, Paper } from "@material-ui/core";
@@ -10,15 +10,13 @@ export const PageWrapper = ({ forward = { disabled: true, link: "/" }, back = { 
     const history = useHistory();
     const location = useLocation();
 
-    useEffect(() => {
-        if (location.pathname !== TYPE_OF_DAY && currentDay.type === undefined) history.push(TYPE_OF_DAY);
-    }, [currentDay]);
+    return <React.Fragment>{(currentDay && currentDay.type) || location.pathname === TYPE_OF_DAY ? <Container>
+            <Paper elevation={3} className="wrapper">
+                <Box className={className}>{children}</Box>
+                <Box><NavButtons forward={forward} back={back} /></Box>
+            </Paper>
+        </Container> : <Redirect to={TYPE_OF_DAY} />
 
-    return <Container>
-        <Paper elevation={3} className="wrapper">
-        <Box className={className}>{children}</Box>
-        <Box><NavButtons forward={forward} back={back} /></Box>
-        </Paper>
-    </Container>
+    }</React.Fragment>
 }
 export default PageWrapper
