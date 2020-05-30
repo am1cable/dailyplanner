@@ -1,6 +1,6 @@
 import React from "react";
 import Pages from "./pages/pages";
-import { BrowserRouter as Router } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 import "./App.scss";
 
 export const App = () => (

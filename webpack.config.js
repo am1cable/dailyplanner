@@ -3,50 +3,50 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
-      optimization: {
+    optimization: {
         splitChunks: {
-          cacheGroups: {
-            commons: {
-              test: /[\\/]node_modules[\\/]/,
-              name: "vendors",
-              chunks: "all"
+            cacheGroups: {
+                commons: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: "vendors",
+                    chunks: "all"
+                }
             }
-          }
         }
-      },
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        }
-      },
-      {
-        test: /\.s[ac]ss$/i,
-        use: [
-            'style-loader',
-            'css-loader',
-            'sass-loader',
+    },
+    module: {
+        rules: [
             {
-              loader: 'postcss-loader',
-              options: {
-                minimize: true,
-                plugins: () => [autoprefixer({
-                  'overrideBrowserslist': ['> 1%', 'last 2 versions']
-                })]
-              }
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader'
+                }
+            },
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            minimize: true,
+                            plugins: () => [autoprefixer({
+                                'overrideBrowserslist': ['> 1%', 'last 2 versions']
+                            })]
+                        }
+                    }
+                ]
             }
-          ]
-      }
+        ]
+    },
+    plugins: [
+        new HtmlWebPackPlugin({
+            template: './src/index.html',
+            filename: './index.html'
+        }),
+        new CleanWebpackPlugin()
     ]
-  },
-  plugins: [   
-    new HtmlWebPackPlugin({
-      template: './src/index.html',
-      filename: './index.html'
-    }),
-    new CleanWebpackPlugin()
-  ]
 };

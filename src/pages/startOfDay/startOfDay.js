@@ -10,6 +10,8 @@ import "./startOfDay.scss";
 
 export const hourOptions = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
 
+export const dayPeriod = ["am", "pm"];
+
 export const StartOfDay = () => {
     const currentDay = useSelector(state => state.currentDayData);
     const dispatch = useDispatch();
@@ -25,7 +27,7 @@ export const StartOfDay = () => {
         if (!isEqual(startOfDayPeriod, currentDay.startOfDayPeriod)) dispatch(saveDay({...currentDay, startOfDayPeriod}));
     }, [startOfDayPeriod]) 
 
-    const renderAmPm = () =>  <Dropdown label={"Am/Pm"} onChange={setStartOfDayPeriod} choice={startOfDayPeriod} options={["am", "pm"]}/>
+    const renderAmPm = () =>  <Dropdown label={"Am/Pm"} onChange={setStartOfDayPeriod} choice={startOfDayPeriod} options={dayPeriod}/>
 
     return <PageWrapper className={'start-day'} back={{link: TOTAL_HOURS}} forward={{disabled: isMissingHours, link: START_TIMES}}>
        <div> <p>When is the start of your day?</p><HourMinuteInput {...startOfDay} hourLabel={'Hour'} minuteLabel={'Half hour'} onBlur={setStartOfDay} hourOptions={hourOptions} extra={renderAmPm()}/>
