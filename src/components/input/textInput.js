@@ -1,15 +1,16 @@
 import { TextField } from "@material-ui/core"
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./textInput.scss";
 
-export const TextInput = ({ text = "", label, onBlur = () => {}, onChange = () => {}, clearInput = false, className, ...props }) => {
+export const TextInput = ({ text = "", forwardedRef, label, onBlur = () => {}, onChange = () => {}, clearInput = false, className, ...props }) => {
     const [value, setValue] = useState(text);
     const handleChange = e => setValue(e.target.value)
+    const textInputRef = forwardedRef || useRef();
     const catchReturn = (e) => {
         if (e.key === 'Enter') {
             setValue(e.target.value);
             e.preventDefault();
-            document.activeElement.blur();
+            textInputRef.current && textInputRef.current.blur();
         }
     }
     const cleanUp = () => {
@@ -26,7 +27,7 @@ export const TextInput = ({ text = "", label, onBlur = () => {}, onChange = () =
         return sendValue;
     }, [value]);
 
-    return <TextField {...props} onKeyPress={catchReturn} className={`text-input${className ? " " + className : ''}`} onBlur={cleanUp} label={label} value={value} onChange={handleChange} />;
+    return <TextField {...props} inputRef={textInputRef} onKeyPress={catchReturn} className={`text-input${className ? " " + className : ''}`} onBlur={cleanUp} label={label} value={value} onChange={handleChange} />;
 }
 
 export default TextInput;

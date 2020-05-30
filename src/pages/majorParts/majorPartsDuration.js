@@ -6,15 +6,14 @@ import HourMinuteInput from "../../components/input/dropdown/hourMinuteInput";
 import "./majorParts.scss";
 import { saveDay } from "../../actions";
 import isEqual from "lodash/isEqual";
-import { duration } from "@material-ui/core";
-import { Redirect } from "react-router-dom";
+import { List, ListItem, ListItemText } from "@material-ui/core";
 
 export const MajorPartsDuration = () => {
     const currentDay = useSelector(state => state.currentDayData);
     const dispatch = useDispatch();
     const getDurations = () => (currentDay.majorParts || []).map(part => ((currentDay.majorPartDurations || []).find(duration => duration.id === part.id) || { id: part.id, hours: 0, minutes: 0 }));
     const [majorPartDurations, setMajorPartDurations] = useState(getDurations());
-    const hasHours = useMemo(() => majorPartDurations.every(duration => ( duration.hours !== 0 ||  duration.hours === 0 && duration.minutes !== 0)), [majorPartDurations]);
+    const hasHours = useMemo(() => majorPartDurations.every(duration => (duration.hours !== 0 || duration.hours === 0 && duration.minutes !== 0)), [majorPartDurations]);
 
     useEffect(() => {
         if (!isEqual(majorPartDurations, currentDay.majorPartDurations)) dispatch(saveDay({ ...currentDay, majorPartDurations }));
@@ -27,14 +26,15 @@ export const MajorPartsDuration = () => {
         setMajorPartDurations(newMajorPartDurations);
     }
 
-    const renderDurations = () => currentDay.majorParts.map((part, index) => <div className="part" key={index}>
-        <p>{part.name}</p>
+    const renderDurations = () => currentDay.majorParts.map((part, index) => <ListItem button className="part" key={index}>
+        <ListItemText primary={part.name}/>
         <HourMinuteInput {...majorPartDurations.find(duration => duration.id === part.id)} onBlur={updateMajorPartDurations(index)} />
-    </div>)
+    </ListItem>)
 
     return <PageWrapper className="major-parts major-parts-duration" back={{ link: MAJOR_PARTS }} forward={{ link: HOURS_OF_SLEEP, disabled: !hasHours }}>
         <div>How long would you like to spend on each part of your day?</div>
-        {currentDay.majorParts && renderDurations()}
+        <List>        {currentDay.majorParts && renderDurations()}
+        </List>
     </PageWrapper>
 }
 export default MajorPartsDuration
