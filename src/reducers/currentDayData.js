@@ -11,6 +11,8 @@ const currentDayData = (state = defaultState, action) => {
                 ...state,
                 ...action.data
             }
+        case 'DELETE_ALL_DATA':
+            return defaultState;
         default:
             return state
     }

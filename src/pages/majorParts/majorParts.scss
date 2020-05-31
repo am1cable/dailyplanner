@@ -1,6 +1,12 @@
 .major-parts{
-    .part{
+    .parts-lists {
         display: flex;
-        justify-content: space-between;    
+        justify-content: center;    
+        align-items: baseline;
+        .names{
+            li{
+                height: 64px;
+            }
+        }
     }
 }

@@ -15,6 +15,11 @@ module.exports = {
         }
     },
     devtool: "eval-source-map",
+    devServer: {
+        host: '192.168.0.118',
+        port: 8080,
+        disableHostCheck: true
+    },
     module: {
         rules: [
             {

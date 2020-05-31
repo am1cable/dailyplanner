@@ -3,6 +3,10 @@ export const saveAll = data => ({
     data
 })
 
+export const deleteAll = () => ({
+    type: 'DELETE_ALL_DATA'
+})
+
 export const saveDay = data => ({
     type: 'UPDATE_CURRENT_DAY_DATA',
     data

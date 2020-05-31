@@ -1,7 +1,6 @@
 const defaultState = {
     dayTypeOptions: ["Workday", "Housework / Chores", "Free", "Other"],
     dayTypeChoice: "",
-    dayTypeChoiceOther: "",
     dayTypeDetails: []
 
 };
@@ -13,6 +12,8 @@ const pageData = (state = defaultState, action) => {
                 ...state,
                 ...action.data
             }
+        case 'DELETE_ALL_DATA':
+            return defaultState;
         default:
             return state
     }

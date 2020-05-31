@@ -6,7 +6,7 @@ import HourMinuteInput from "../../components/input/dropdown/hourMinuteInput";
 import "./majorParts.scss";
 import { saveDay } from "../../actions";
 import isEqual from "lodash/isEqual";
-import { List, ListItem, ListItemText } from "@material-ui/core";
+import { List, ListItem, ListItemText, ListItemSecondaryAction } from "@material-ui/core";
 
 export const MajorPartsDuration = () => {
     const currentDay = useSelector(state => state.currentDayData);
@@ -26,15 +26,15 @@ export const MajorPartsDuration = () => {
         setMajorPartDurations(newMajorPartDurations);
     }
 
-    const renderDurations = () => currentDay.majorParts.map((part, index) => <ListItem button className="part" key={index}>
-        <ListItemText primary={part.name}/>
-        <HourMinuteInput {...majorPartDurations.find(duration => duration.id === part.id)} onBlur={updateMajorPartDurations(index)} />
-    </ListItem>)
+    const renderNames = () => currentDay.majorParts.map((part, index) => <ListItem key={index}><ListItemText>{part.name}</ListItemText></ListItem>)
+    const renderDurations = () => currentDay.majorPartDurations.map((duration, index) => <ListItem key={index}><HourMinuteInput {...duration} onBlur={updateMajorPartDurations(index)} /></ListItem>)
 
     return <PageWrapper className="major-parts major-parts-duration" back={{ link: MAJOR_PARTS }} forward={{ link: HOURS_OF_SLEEP, disabled: !hasHours }}>
         <div>How long would you like to spend on each part of your day?</div>
-        <List>        {currentDay.majorParts && renderDurations()}
-        </List>
+        <div className="parts-lists">
+            <List className="names">{currentDay.majorParts && renderNames()}</List>
+            <List className="durations">{currentDay.majorPartDurations && renderDurations()}</List>
+        </div>
     </PageWrapper>
 }
 export default MajorPartsDuration

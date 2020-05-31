@@ -6,7 +6,7 @@ import { hourOptions as hourOptionsStartOfDay, dayPeriod } from "../startOfDay/s
 import { minuteOptions } from "../../components/input/dropdown/hourMinuteInput";
 import { getTimes } from "../../utils/timeline";
 import jsPDF from 'jspdf';
-import { Button } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 
 export const StartTimes = () => {
     const currentDay = useSelector(state => state.currentDayData);
@@ -19,8 +19,9 @@ export const StartTimes = () => {
     const getScheduleByHours = () => {
         const times = calculateTime()
         return times.reduce((timeline, currentActivity, index) => {
+            const name = (currentDay.majorParts.find(part => part.id === currentActivity.id) || []).name;
             if (timeline.length === 0) {
-                timeline.push(getStartOfDayAsHourMinute());
+                timeline.push({ ...getStartOfDayAsHourMinute(), id: currentActivity.id, name: name });
             } else {
                 const prevActivityStart = timeline[timeline.length - 1];
                 const previousActivity = times[index - 1];
@@ -33,9 +34,9 @@ export const StartTimes = () => {
                 }
                 if (newActivityStartMinutes > 30) {
                     newActivityStartHour++;
-                    timeline.push({ hour: newActivityStartHour, minutes: "00", ampm: newActivityStartampm });
+                    timeline.push({ hour: newActivityStartHour, minutes: "00", ampm: newActivityStartampm, id: currentActivity.id, name: name });
                 } else {
-                    timeline.push({ hour: newActivityStartHour, minutes: newActivityStartMinutes, ampm: newActivityStartampm });
+                    timeline.push({ hour: newActivityStartHour, minutes: newActivityStartMinutes, ampm: newActivityStartampm, id: currentActivity.id, name: name });
                 }
             }
             return timeline;
@@ -43,7 +44,7 @@ export const StartTimes = () => {
     }
 
     const exportAsPdf = (text) => () => {
-        const fonts = ["helvetica", "neue" ];
+        const fonts = ["helvetica", "neue"];
         const unit = "in";
         const pageWidth = 8.5;
         const lineHeight = 1.2;
@@ -62,20 +63,23 @@ export const StartTimes = () => {
             .setFontSize(fontSize)
             .splitTextToSize(text(), maxLineWidth);
         doc.text(textLines, margin, margin + 2 * oneLineHeight);
-        doc.save();
+        const today = new Date().toLocaleDateString("en-US", { month: 'long', day: 'numeric', year: 'numeric' });
+        doc.save(`My Daily Planner-${today}`);
     }
 
-    const generateUnformattedSchedule = () => getScheduleByHours().map((time, index) => `${time.hour}:${time.minutes} ${time.ampm} - ${currentDay.majorParts.find(part => part.id === duration.id).name || "Sleep"}\n`).reduce((finalText, text) => finalText + text, "")
-    const renderScheduleByHours = () => getScheduleByHours().map((time, index) => <div key={index}>{time.hour}:{time.minutes} {time.ampm} - {currentDay.majorParts.find(part => part.id === duration.id).name || "Sleep"} </div>)
+    const generateUnformattedSchedule = () => getScheduleByHours().map(time => `${time.hour}:${time.minutes} ${time.ampm} - ${time.name || "Sleep"}\n`).reduce((finalText, text) => finalText + text, "")
+    const renderScheduleByHours = () => getScheduleByHours().map((time, index) => <div key={index}>{time.hour}:{time.minutes} {time.ampm} - {time.name || "Sleep"} </div>)
 
     return <PageWrapper back={{ link: START_OF_DAY }}>
-        <p>start times</p>
-        <div>
-            {renderScheduleByHours()}
-        </div>
-        <div>
-            <Button variant="contained" color="secondary" onClick={exportAsPdf(generateUnformattedSchedule)}>Export as a PDF.</Button>
-        </div>
+        <Grid container spacing={3} 
+            direction="column">
+            <Grid item>
+                {renderScheduleByHours()}
+            </Grid>
+            <Grid item>
+                <Button variant="contained" color="secondary" onClick={exportAsPdf(generateUnformattedSchedule)}>Export as a PDF.</Button>
+            </Grid>
+        </Grid>
     </PageWrapper>
 }
 export default StartTimes 
