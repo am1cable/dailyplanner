@@ -5,6 +5,8 @@ import { saveAs } from 'file-saver';
 import { saveAll, saveDay, deleteAll } from "../../actions";
 import Alert from "@material-ui/lab/Alert";
 import Dialog from '@material-ui/core/Dialog';
+import { useHistory } from "react-router-dom";
+import { TYPE_OF_DAY } from "../../pages/pageUrls";
 
 export const UploadButton = ({ onUpload, children, ...props }) => <React.Fragment>
     <input accept=".plannerBackup" id="upload-backup" type="file" hidden onChange={onUpload} />
@@ -14,6 +16,7 @@ export const UploadButton = ({ onUpload, children, ...props }) => <React.Fragmen
 </React.Fragment>
 
 export const ManageData = () => {
+    const history = useHistory();
     const [imported, setImported] = useState(false);
     const [deleting, setDeleting] = useState(false);
     const pageData = useSelector(state => state.pageData);
@@ -45,6 +48,7 @@ export const ManageData = () => {
     const cleanData = () => {
         dispatch(deleteAll());
         setDeleting(false);
+        history.push(TYPE_OF_DAY);
     }
 
     return <React.Fragment>
@@ -57,12 +61,10 @@ export const ManageData = () => {
             <DialogTitle>Delete all your information?</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    <div>
-                        Are you sure you want to delete all information? <strong> This removes all your custom day types and all the information you have entered.</strong>
-                    </div>
-                    <div>
-                        You can restore this information if you have saved a copy to your local machine using the backup option. If you are not on the first step of creating your daily planner, you will be sent back to the start.
-                    </div>
+                    Are you sure you want to delete all information? <strong> This removes all your custom day types and all the information you have entered.</strong>
+                </DialogContentText>
+                <DialogContentText>
+                    You can restore this information if you have saved a copy to your local machine using the backup option. If you are not on the first step of creating your daily planner, you will be sent back to the start.
                 </DialogContentText>
                 <DialogActions>
                     <Button color="primary" autoFocus onClick={() => setDeleting(false)}>I changed my mind.</Button>
