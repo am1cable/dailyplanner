@@ -5,3 +5,7 @@ export const HOURS_OF_SLEEP = "/hours-of-sleep";
 export const TOTAL_HOURS = "/total-hours";
 export const START_OF_DAY = "/start-of-day";
 export const START_TIMES = "/start-times";
+export const LIST_ACTIVITIES = "/list-activities";
+export const CATEGORIZE_ACTIVITIES = "/categorize-activities";
+export const PRIORITIZE_ACTIVITIES = "/prioritize-activities";
+export const PRIORITIZE_ACTIVITIES_TOP = "/prioritize-activities-top";

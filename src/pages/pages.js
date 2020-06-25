@@ -8,6 +8,10 @@ import HoursOfSleep from "./hoursOfSleep/hoursOfSleep";
 import TotalHours from "./totalHours/totalHours";
 import StartOfDay from "./startOfDay/startOfDay";
 import StartTimes from "./startTimes/startTimes";
+import ListActivities from "./listActivities/listActivities";
+import CategorizeActivities from "./categorizeActivities/categorizeActivities";
+import PrioritizeActivities from "./prioritizeActivities/prioritizeActivities";
+import PrioritizeActivitiesTop from "./prioritizeActivitiesTop/prioritizeActivitiesTop";
 
 export const Pages = () => <Switch>
     <Route path={pages.TYPE_OF_DAY} component={TypeOfDay} />
@@ -17,6 +21,10 @@ export const Pages = () => <Switch>
     <Route path={pages.TOTAL_HOURS} component={TotalHours} />
     <Route path={pages.START_OF_DAY} component={StartOfDay} />
     <Route path={pages.START_TIMES} component={StartTimes} />
+    <Route path={pages.LIST_ACTIVITIES} component={ListActivities} />
+    <Route path={pages.CATEGORIZE_ACTIVITIES} component={CategorizeActivities} />
+    <Route path={pages.PRIORITIZE_ACTIVITIES} component={PrioritizeActivities} />
+    <Route path={pages.PRIORITIZE_ACTIVITIES_TOP} component={PrioritizeActivitiesTop} />
     <Route path="/">
         <Redirect to={pages.TYPE_OF_DAY} />
     </Route>

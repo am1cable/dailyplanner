@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import PageWrapper from "../../components/pageWrapper/pageWrapper";
-import { START_OF_DAY } from "../pageUrls";
+import { START_OF_DAY, LIST_ACTIVITIES } from "../pageUrls";
 import { useSelector, useDispatch } from "react-redux";
 import { hourOptions as hourOptionsStartOfDay, dayPeriod } from "../startOfDay/startOfDay";
 import { minuteOptions } from "../../components/input/dropdown/hourMinuteInput";
@@ -68,10 +68,10 @@ export const StartTimes = () => {
     }
 
     const generateUnformattedSchedule = () => getScheduleByHours().map(time => `${time.hour}:${time.minutes} ${time.ampm} - ${time.name || "Sleep"}\n`).reduce((finalText, text) => finalText + text, "")
-    const renderScheduleByHours = () => getScheduleByHours().map((time, index) => <div key={index}>{time.hour}:{time.minutes} {time.ampm} - {time.name || "Sleep"} </div>)
+    const renderScheduleByHours = () => getScheduleByHours().map((time, index) => <div key={index}>{time.hour}:{(time.minutes.toString().length === 1 ? `${time.minutes}0` : time.minutes)} {time.ampm} - {time.name || "Sleep"} </div>)
 
-    return <PageWrapper back={{ link: START_OF_DAY }}>
-        <Grid container spacing={3} 
+    return <PageWrapper back={{ link: START_OF_DAY }} forward={{link: LIST_ACTIVITIES}}>
+        <Grid container spacing={3}
             direction="column">
             <Grid item>
                 {renderScheduleByHours()}

@@ -17,6 +17,7 @@
     "jspdf": "^1.5.3",
     "lodash": "^4.17.15",
     "react": "^16.13.1",
+    "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.1",
     "react-imask": "^6.0.5",
     "react-number-format": "^4.4.1",
