@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import PageWrapper from "../../components/pageWrapper/pageWrapper";
-import { START_TIMES, CATEGORIZE_ACTIVITIES } from "../pageUrls";
+import PageWrapper from "../../../components/pageWrapper/pageWrapper";
+import { START_TIMES, CATEGORIZE_ACTIVITIES } from "../../pageUrls";
 import { useSelector, useDispatch } from "react-redux";
-import TextInput from "../../components/input/textInput";
+import TextInput from "../../../components/input/textInput";
 import DeleteIcon from '@material-ui/icons/Delete';
 import { IconButton, List, ListItem } from "@material-ui/core";
-import { saveDay } from "../../actions";
+import { saveDay } from "../../../actions";
 import debounce from 'lodash/debounce';
-import "../majorParts/majorParts.scss";
-import { generateId } from "../../utils/id";
+import "../../1_majorParts/majorParts/majorParts.scss";
+import { generateId } from "../../../utils/id";
 
 export const ListActivities = () => {
     const currentDay = useSelector(state => state.currentDayData);

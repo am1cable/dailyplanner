@@ -7,7 +7,7 @@ export const exportAsPdf = (text) => () => {
     const lineHeight = 1.2;
     const margin = 0.5;
     const maxLineWidth = pageWidth - margin * 2;
-    const fontSize = 24;
+    const fontSize = 20;
     const ptsPerInch = 72;
     const oneLineHeight = (fontSize * lineHeight) / ptsPerInch;
 
@@ -16,10 +16,9 @@ export const exportAsPdf = (text) => () => {
         lineHeight: lineHeight
     }).setProperties({ title: "thingey" });
     // const textLines = doc
-    //     .setFont(...fonts)
-    //     .setFontSize(fontSize)
     //     .splitTextToSize(text(), maxLineWidth);
-
+    doc.setFontSize(...fonts);
+    doc.setFontSize(fontSize);
     doc.text(text(), margin, margin + 2 * oneLineHeight);
     const today = new Date().toLocaleDateString("en-US", { month: 'long', day: 'numeric', year: 'numeric' });
     doc.save(`My Daily Planner-${today}`);

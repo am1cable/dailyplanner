@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import PageWrapper from "../../components/pageWrapper/pageWrapper";
-import { MAJOR_PARTS, HOURS_OF_SLEEP } from "../pageUrls";
-import HourMinuteInput from "../../components/input/dropdown/hourMinuteInput";
+import PageWrapper from "../../../components/pageWrapper/pageWrapper";
+import { MAJOR_PARTS, HOURS_OF_SLEEP } from "../../pageUrls";
+import HourInput from "../../../components/input/dropdown/hourMinuteInput";
 import "./majorParts.scss";
-import { saveDay } from "../../actions";
+import { saveDay } from "../../../actions";
 import isEqual from "lodash/isEqual";
-import { List, ListItem, ListItemText, ListItemSecondaryAction } from "@material-ui/core";
+import { List, ListItem, ListItemText } from "@material-ui/core";
 
 export const MajorPartsDuration = () => {
     const currentDay = useSelector(state => state.currentDayData);
@@ -27,7 +27,7 @@ export const MajorPartsDuration = () => {
     }
 
     const renderNames = () => currentDay.majorParts.map((part, index) => <ListItem key={index}><ListItemText>{part.name}</ListItemText></ListItem>)
-    const renderDurations = () => currentDay.majorPartDurations.map((duration, index) => <ListItem key={index}><HourMinuteInput {...duration} onBlur={updateMajorPartDurations(index)} /></ListItem>)
+    const renderDurations = () => currentDay.majorPartDurations.map((duration, index) => <ListItem key={index}><HourInput {...duration} onBlur={updateMajorPartDurations(index)} /></ListItem>)
 
     return <PageWrapper className="major-parts major-parts-duration" back={{ link: MAJOR_PARTS }} forward={{ link: HOURS_OF_SLEEP, disabled: !hasHours }}>
         <div>How long would you like to spend on each part of your day?</div>

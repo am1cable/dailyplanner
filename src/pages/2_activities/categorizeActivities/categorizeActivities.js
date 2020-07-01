@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
-import PageWrapper from "../../components/pageWrapper/pageWrapper";
-import { LIST_ACTIVITIES, PRIORITIZE_ACTIVITIES } from "../pageUrls";
+import PageWrapper from "../../../components/pageWrapper/pageWrapper";
+import { LIST_ACTIVITIES, PRIORITIZE_ACTIVITIES } from "../../pageUrls";
 import { useSelector, useDispatch } from "react-redux";
 import { List, ListItem, ListItemText, MenuItem } from "@material-ui/core";
-import { saveDay } from "../../actions";
+import { saveDay } from "../../../actions";
 import debounce from 'lodash/debounce';
-import { Dropdown } from "../../components/input/dropdown/dropdown";
+import { Dropdown } from "../../../components/input/dropdown/dropdown";
 import "./categorizeActivities.scss";
 
 export const CategorizeActivities = () => {

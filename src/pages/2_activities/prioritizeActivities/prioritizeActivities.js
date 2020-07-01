@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
-import PageWrapper from "../../components/pageWrapper/pageWrapper";
-import {  CATEGORIZE_ACTIVITIES, PRIORITIZE_ACTIVITIES_TOP } from "../pageUrls";
+import PageWrapper from "../../../components/pageWrapper/pageWrapper";
+import {  CATEGORIZE_ACTIVITIES, PRIORITIZE_ACTIVITIES_TOP } from "../../pageUrls";
 import { useSelector, useDispatch } from "react-redux";
 import { List, ListItem, ListItemText } from "@material-ui/core";
-import { saveDay } from "../../actions";
+import { saveDay } from "../../../actions";
 import debounce from 'lodash/debounce';
-import { Dropdown } from "../../components/input/dropdown/dropdown";
+import { Dropdown } from "../../../components/input/dropdown/dropdown";
 import "../categorizeActivities/categorizeActivities.scss";
-import CategoryMenu from "../../components/categoryMenu/categoryMenu";
+import CategoryMenu from "../../../components/categoryMenu/categoryMenu";
+import { priorities } from "../../../utils/activities";
 
-export const priorityNames = {must_have: "Must Have", nice_to_have: "Nice to Have"}
-export const priorities = [priorityNames.must_have, priorityNames.nice_to_have];
 export const localStorageId = 'activities-category';
 
 const PrioritizeActivity = ({ name, priority, id, onChange }) => {

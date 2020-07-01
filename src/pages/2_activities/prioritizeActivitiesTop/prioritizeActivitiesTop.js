@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useCallback } from "react";
-import PageWrapper from "../../components/pageWrapper/pageWrapper";
-import { PRIORITIZE_ACTIVITIES, ALL_ACTIVITIES } from "../pageUrls";
+import PageWrapper from "../../../components/pageWrapper/pageWrapper";
+import { PRIORITIZE_ACTIVITIES, OVERVIEW } from "../../pageUrls";
 import { useSelector, useDispatch } from "react-redux";
 import { List, ListItem, ListItemText, RootRef, Portal, ListItemAvatar, Avatar } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
-import { saveDay } from "../../actions";
+import { saveDay } from "../../../actions";
 import debounce from 'lodash/debounce';
-import CategoryMenu from "../../components/categoryMenu/categoryMenu";
+import CategoryMenu from "../../../components/categoryMenu/categoryMenu";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import "./prioritizeActivitiesTop.scss";
-import { priorities, priorityNames } from "../prioritizeActivities/prioritizeActivities";
-import { prioritizedActivities } from "../../utils/activities";
+import { priorities, priorityNames } from "../../../utils/activities";
+import { prioritizedActivities } from "../../../utils/activities";
 import {localStorageId} from "../prioritizeActivities/prioritizeActivities";
 
 const useStyles = makeStyles((theme) => ({
@@ -78,7 +78,7 @@ export const PrioritizeActivitiesTop = () => {
             <ListItemText primaryTypographyProps={{ color: 'textSecondary' }}>{name}</ListItemText>
         </ListItem>)
 
-    return <PageWrapper className="prioritize-activities-top" back={{ link: PRIORITIZE_ACTIVITIES }} forward={{ disabled: !activitesInDay.filter(highPriorityActivities).every(({ priorityIndex }) => priorityIndex !== undefined), link: ALL_ACTIVITIES }} >
+    return <PageWrapper className="prioritize-activities-top" back={{ link: PRIORITIZE_ACTIVITIES }} forward={{ disabled: !activitesInDay.filter(highPriorityActivities).every(({ priorityIndex }) => priorityIndex !== undefined), link: OVERVIEW }} >
         <div>Drag and drop to identify the priority of each <strong>{priorityNames.must_have}</strong> activity in this section of your day</div>
         <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="droppable">

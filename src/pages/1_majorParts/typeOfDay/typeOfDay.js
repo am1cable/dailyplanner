@@ -1,10 +1,10 @@
 import React from "react";
-import PageWrapper from "../../components/pageWrapper/pageWrapper";
+import PageWrapper from "../../../components/pageWrapper/pageWrapper";
 import { useSelector, useDispatch } from "react-redux";
-import { saveAll, setDay } from "../../actions";
-import { Dropdown } from "../../components/input/dropdown/dropdown";
-import TextInput from "../../components/input/textInput";
-import { MAJOR_PARTS } from "../pageUrls";
+import { saveAll, setDay } from "../../../actions";
+import { Dropdown } from "../../../components/input/dropdown/dropdown";
+import TextInput from "../../../components/input/textInput";
+import { MAJOR_PARTS } from "../../pageUrls";
 
 export const TypeOfDay = () => {
     const pageData = useSelector(state => state.pageData);
