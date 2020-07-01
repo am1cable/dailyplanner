@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PageWrapper from "../../components/pageWrapper/pageWrapper";
 import { useSelector, useDispatch } from "react-redux";
 import { saveAll, setDay } from "../../actions";
@@ -23,7 +23,7 @@ export const TypeOfDay = () => {
     const updateAllTypes = (props) => {
         if (props.dayTypeChoice !== "") {
             dispatch(saveAll({ ...props, dayTypeDetails: [...props.dayTypeDetails.filter(details => details.type !== currentDay.type), currentDay] }));
-            dispatch(setDay(props.dayTypeDetails.find(detail => detail.type === props.dayTypeChoice) || { type: props.dayTypeChoice }));
+            dispatch(setDay(props.dayTypeDetails.find(detail => detail.type === props.dayTypeChoice) || { type: props.dayTypeChoice, name: props.dayTypeOptions[props.dayTypeChoice] }));
         }
     }
 

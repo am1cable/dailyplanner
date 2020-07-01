@@ -11,7 +11,7 @@ import CategoryMenu from "../../components/categoryMenu/categoryMenu";
 
 export const priorityNames = {must_have: "Must Have", nice_to_have: "Nice to Have"}
 export const priorities = [priorityNames.must_have, priorityNames.nice_to_have];
-const localStorageId = 'prioritizeActivities-category';
+export const localStorageId = 'activities-category';
 
 const PrioritizeActivity = ({ name, priority, id, onChange }) => {
     const handleChange = (e) => {

@@ -11,13 +11,13 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import "./prioritizeActivitiesTop.scss";
 import { priorities, priorityNames } from "../prioritizeActivities/prioritizeActivities";
 import { prioritizedActivities } from "../../utils/activities";
+import {localStorageId} from "../prioritizeActivities/prioritizeActivities";
 
 const useStyles = makeStyles((theme) => ({
     top3Icon: {
         backgroundColor: theme.palette.primary.main,
     },
 }));
-const localStorageId = 'prioritizeActivitiesTop-category';
 
 const PortalAwareDraggable = ({ provided, snapshot, children }) => {
     return snapshot.isDragging ? <Portal>{children}</Portal> : children;
@@ -34,7 +34,6 @@ export const PrioritizeActivitiesTop = () => {
 
     const highPriorityActivities = ({ priority }) => priority === priorities.indexOf(priorityNames.must_have);
     const activitiesInCurrentCategory = (targetCategory = currentCategory) => activitesInDay.filter(({ categoryId }) => categoryId === targetCategory.id);
-    const majorPartsWithActivities = () => currentDay.majorParts.filter(part => activitiesInCurrentCategory(part).filter(highPriorityActivities).length > 0);
 
     useEffect(() => { saveDayDebounce() }, [activitesInDay])
 
@@ -58,7 +57,7 @@ export const PrioritizeActivitiesTop = () => {
         setActivitysInDay(activitiesWithNewIndexes);
     }
 
-    const renderCategoryMenu = () => <CategoryMenu categories={majorPartsWithActivities()} currentCategory={currentCategory} onChange={handleCategoryChange} />
+    const renderCategoryMenu = () => <CategoryMenu categories={currentDay.majorParts} currentCategory={currentCategory} onChange={handleCategoryChange} />
     const renderHighPriorityActivities = () => activitiesInCurrentCategory().sort(prioritizedActivities).filter(highPriorityActivities).map(({ name, priority, id, priorityIndex }, index) =>
         <Draggable isDragDisabled={activitiesInCurrentCategory().filter(highPriorityActivities).length === 1} key={id} draggableId={id} index={priorityIndex || index}>{
             (provided, snapshot) => <PortalAwareDraggable

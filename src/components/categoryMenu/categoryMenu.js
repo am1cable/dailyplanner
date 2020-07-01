@@ -17,10 +17,10 @@ export const CategoryMenu = ({ currentCategory, categories, onChange }) => {
     const nextCategory = () => onChange(categories[categories.indexOf(currentCategory) + 1])
 
     return <Fragment>
-        <ButtonGroup color={"primary"} size="large" variant="contained">
-            <Button onClick={previousCategory} variant="outlined" disabled={currentCategory.id === categories[0].id}><NavigateBeforeIcon /></Button>
-            <Button onClick={handleClick}>{currentCategory.name}</Button>
-            <Button onClick={nextCategory} variant="outlined" disabled={currentCategory.id === categories[categories.length - 1].id}><NavigateNextIcon /></Button>
+        <ButtonGroup color={"primary"} size="large">
+            <Button onClick={previousCategory} disabled={currentCategory.id === categories[0].id}><NavigateBeforeIcon /></Button>
+            <Button onClick={handleClick} variant="contained">{currentCategory.name}</Button>
+            <Button onClick={nextCategory} disabled={currentCategory.id === categories[categories.length - 1].id}><NavigateNextIcon /></Button>
         </ButtonGroup>
         <Menu
             getContentAnchorEl={null}

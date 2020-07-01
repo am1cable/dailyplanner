@@ -7,8 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CategoryMenu from "../../components/categoryMenu/categoryMenu";
 import { priorities } from "../prioritizeActivities/prioritizeActivities";
 import { prioritizedActivities, priorityWeightizedActivities } from "../../utils/activities";
-
-const localStorageId = 'listPriorities-category';
+import {localStorageId} from "../prioritizeActivities/prioritizeActivities";
 
 const useStyles = makeStyles((theme) => ({
     top3Icon: {
