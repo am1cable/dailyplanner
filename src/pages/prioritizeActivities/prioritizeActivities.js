@@ -9,7 +9,8 @@ import { Dropdown } from "../../components/input/dropdown/dropdown";
 import "../categorizeActivities/categorizeActivities.scss";
 import CategoryMenu from "../../components/categoryMenu/categoryMenu";
 
-export const priorities = ["Must Have", "Nice to Have"];
+export const priorityNames = {must_have: "Must Have", nice_to_have: "Nice to Have"}
+export const priorities = [priorityNames.must_have, priorityNames.nice_to_have];
 const localStorageId = 'prioritizeActivities-category';
 
 const PrioritizeActivity = ({ name, priority, id, onChange }) => {
@@ -49,7 +50,7 @@ export const PrioritizeActivities = () => {
 
     return <PageWrapper className="major-parts" back={{ link: CATEGORIZE_ACTIVITIES }} forward={{ disabled: !activitesInDay.every(({priority}) => priority !== undefined), link: PRIORITIZE_ACTIVITIES_TOP }}>
         <div>Identify the priority of each activity in this section of your day</div>
-        <List>
+        <List className="dropdown-list">
             {activitiesInCurrentCategory().map((activity, index) => <PrioritizeActivity key={index} {...activity} onChange={handlePriorityChange} />)}
         </List>
             {renderCategoryMenu()}

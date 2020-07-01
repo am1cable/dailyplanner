@@ -74,10 +74,10 @@ export const ManageData = () => {
         </Dialog>
         <Grid spacing={3} container>
             <Grid item>
-                <UploadButton onUpload={importData}>Restore</UploadButton>
+                <UploadButton onUpload={importData}>Open</UploadButton>
             </Grid>
             <Grid item>
-                <Button onClick={exportData}>Backup</Button>
+                <Button onClick={exportData}>Save</Button>
             </Grid>
             <Grid item>
                 <Button onClick={() => setDeleting(true)}>Delete All Information</Button>

@@ -30,9 +30,9 @@ export const CategorizeActivities = () => {
             label={"Select from the options below."} />
     </ListItem>);
 
-    return <PageWrapper className="major-parts" back={{ link: LIST_ACTIVITIES }} forward={{ disabled: !activitesInDay.every(({ categoryId }) => categoryId !== undefined), link: PRIORITIZE_ACTIVITIES }}>
+    return <PageWrapper className="categorize-activities" back={{ link: LIST_ACTIVITIES }} forward={{ disabled: !activitesInDay.every(({ categoryId }) => categoryId !== undefined), link: PRIORITIZE_ACTIVITIES }}>
         <div>Identify activities you want to do daily</div>
-        <List>
+        <List className="dropdown-list">
             {renderCurrentActivitysInDay()}
         </List>
     </PageWrapper>

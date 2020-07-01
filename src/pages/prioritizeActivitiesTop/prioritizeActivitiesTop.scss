@@ -1,0 +1,11 @@
+.prioritize-activities-top{
+    .high-priority.part:nth-child(-n+3) {
+        span {
+        font-weight: 800;
+    }
+}
+    .low-priority.part{
+        color: grey;
+    }
+
+}

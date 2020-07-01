@@ -9,3 +9,5 @@ export const LIST_ACTIVITIES = "/list-activities";
 export const CATEGORIZE_ACTIVITIES = "/categorize-activities";
 export const PRIORITIZE_ACTIVITIES = "/prioritize-activities";
 export const PRIORITIZE_ACTIVITIES_TOP = "/prioritize-activities-top";
+export const ALL_ACTIVITIES = "/all-activities";
+export const OVERVIEW = "/overview";

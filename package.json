@@ -12,7 +12,7 @@
   "dependencies": {
     "@material-ui/core": "^4.10.0",
     "@material-ui/icons": "^4.9.1",
-    "@material-ui/lab": "^4.0.0-alpha.54",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "file-saver": "^2.0.2",
     "jspdf": "^1.5.3",
     "lodash": "^4.17.15",
@@ -36,7 +36,6 @@
     "css-loader": "^3.5.3",
     "gh-pages": "^2.2.0",
     "html-webpack-plugin": "^4.3.0",
-    "parcel": "2.0.0-alpha.3.2",
     "postcss-loader": "^3.0.0",
     "redux-devtools": "^3.5.0",
     "sass": "^1.26.5",

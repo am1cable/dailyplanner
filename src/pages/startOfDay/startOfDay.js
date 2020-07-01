@@ -7,10 +7,7 @@ import isEqual from "lodash/isEqual";
 import { saveDay } from "../../actions";
 import { Dropdown } from "../../components/input/dropdown/dropdown";
 import "./startOfDay.scss";
-
-export const hourOptions = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
-
-export const dayPeriod = ["am", "pm"];
+import { hourOptionsStartOfDay, dayPeriod } from "../../utils/time";
 
 export const StartOfDay = () => {
     const currentDay = useSelector(state => state.currentDayData);
@@ -30,7 +27,7 @@ export const StartOfDay = () => {
     const renderAmPm = () =>  <Dropdown label={"Am/Pm"} onChange={setStartOfDayPeriod} choice={startOfDayPeriod} options={dayPeriod}/>
 
     return <PageWrapper className={'start-day'} back={{link: TOTAL_HOURS}} forward={{disabled: isMissingHours, link: START_TIMES}}>
-       <div> <p>When is the start of your day?</p><HourMinuteInput {...startOfDay} hourLabel={'Hour'} minuteLabel={'Half hour'} onBlur={setStartOfDay} hourOptions={hourOptions} extra={renderAmPm()}/>
+       <div> <p>When is the start of your day?</p><HourMinuteInput {...startOfDay} hourLabel={'Hour'} minuteLabel={'Half hour'} onBlur={setStartOfDay} hourOptions={hourOptionsStartOfDay} extra={renderAmPm()}/>
        </div>
     </PageWrapper>
 }

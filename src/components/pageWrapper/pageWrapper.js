@@ -11,7 +11,7 @@ export const PageWrapper = ({ forward = { disabled: true, link: "/" }, back = { 
     const location = useLocation();
 
     return <React.Fragment>{(currentDay && typeof currentDay.type !== undefined) || location.pathname === TYPE_OF_DAY ?
-        <Container maxWidth="md" >
+        <Container maxWidth="lg" >
             <Grid container spacing={3} direction="column">
                 <Grid item>
                     <Paper elevation={3} className="wrapper">

@@ -12,6 +12,8 @@ import ListActivities from "./listActivities/listActivities";
 import CategorizeActivities from "./categorizeActivities/categorizeActivities";
 import PrioritizeActivities from "./prioritizeActivities/prioritizeActivities";
 import PrioritizeActivitiesTop from "./prioritizeActivitiesTop/prioritizeActivitiesTop";
+import AllActivites from "./allActivities/allActivities";
+import Overview from "./overview/overview";
 
 export const Pages = () => <Switch>
     <Route path={pages.TYPE_OF_DAY} component={TypeOfDay} />
@@ -25,6 +27,8 @@ export const Pages = () => <Switch>
     <Route path={pages.CATEGORIZE_ACTIVITIES} component={CategorizeActivities} />
     <Route path={pages.PRIORITIZE_ACTIVITIES} component={PrioritizeActivities} />
     <Route path={pages.PRIORITIZE_ACTIVITIES_TOP} component={PrioritizeActivitiesTop} />
+    <Route path={pages.ALL_ACTIVITIES} component={AllActivites} />
+    <Route path={pages.OVERVIEW} component={Overview} />
     <Route path="/">
         <Redirect to={pages.TYPE_OF_DAY} />
     </Route>

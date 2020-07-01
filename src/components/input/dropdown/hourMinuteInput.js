@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Dropdown } from "./dropdown";
 import "./hourMinuteInput.scss";
+import { hourOptions , minuteOptions } from "../../../utils/time";
 
-export const hourOptions = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-export const minuteOptions = ["00", "30"];
 
 export const HourMinuteInput = ({ hours: startHours = "", minutes: startMinutes = "", hourLabel="H", minuteLabel="M", onBlur, hourOptions: hoursAvailable=hourOptions, minuteOptions: minutesAvailable=minuteOptions, extra }) => {
     const [hours, setHours] = useState(startHours);

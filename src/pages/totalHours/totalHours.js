@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import Alert from '@material-ui/lab/Alert';
 import "./totalHours.scss";
 import { List, ListItem, ListItemText } from "@material-ui/core";
-import { getTimes } from "../../utils/timeline";
+import { getTimes } from "../../utils/time";
 
 export const TotalHours = () => {
     const currentDay = useSelector(state => state.currentDayData);
