@@ -58,13 +58,13 @@ export const ManageData = () => {
             </Alert>
         </Snackbar>
         <Dialog open={deleting}>
-            <DialogTitle>Delete all your information?</DialogTitle>
+            <DialogTitle>Are you sure you want to delete all information?</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Are you sure you want to delete all information? <strong> This removes all your custom day types and all the information you have entered.</strong>
+                     <strong> This removes all the information you have entered and returns you to the first step of the daily planner.</strong>
                 </DialogContentText>
                 <DialogContentText>
-                    You can restore this information if you have saved a copy to your local machine using the backup option. If you are not on the first step of creating your daily planner, you will be sent back to the start.
+                    You can restore this information if you have downloaded a copy of your data using the save option.
                 </DialogContentText>
                 <DialogActions>
                     <Button color="primary" autoFocus onClick={() => setDeleting(false)}>I changed my mind.</Button>

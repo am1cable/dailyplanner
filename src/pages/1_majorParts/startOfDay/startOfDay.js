@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import PageWrapper from "../../../components/pageWrapper/pageWrapper";
-import { TOTAL_HOURS, START_TIMES } from "../../pageUrls";
+import { TOTAL_HOURS, OVERVIEW_1 } from "../../pageUrls";
 import { useSelector, useDispatch } from "react-redux";
 import HourInput from "../../../components/input/dropdown/hourMinuteInput";
 import isEqual from "lodash/isEqual";
@@ -26,7 +26,7 @@ export const StartOfDay = () => {
 
     const renderAmPm = () =>  <Dropdown label={"Am/Pm"} onChange={setStartOfDayPeriod} choice={startOfDayPeriod} options={dayPeriod}/>
 
-    return <PageWrapper className={'start-day'} back={{link: TOTAL_HOURS}} forward={{disabled: isMissingHours, link: START_TIMES}}>
+    return <PageWrapper className={'start-day'} back={{link: TOTAL_HOURS}} forward={{disabled: isMissingHours, link: OVERVIEW_1}}>
        <div> <p>When is the start of your day?</p><HourInput {...startOfDay} hourLabel={'Hour'} onBlur={setStartOfDay} hourOptions={hourOptionsStartOfDay} extra={renderAmPm()}/>
        </div>
     </PageWrapper>

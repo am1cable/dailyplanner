@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import PageWrapper from "../../../components/pageWrapper/pageWrapper";
-import { PRIORITIZE_ACTIVITIES, OVERVIEW } from "../../pageUrls";
+import { PRIORITIZE_ACTIVITIES, OVERVIEW_2 } from "../../pageUrls";
 import { useSelector, useDispatch } from "react-redux";
 import { List, ListItem, ListItemText, RootRef, Portal, ListItemAvatar, Avatar } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
@@ -73,12 +73,7 @@ export const PrioritizeActivitiesTop = () => {
             </PortalAwareDraggable>
         }</Draggable>)
 
-    const renderLowPriorityActivities = () => activitiesInCurrentCategory().filter((a) => !highPriorityActivities(a)).map(({ name, priority, id }, index) =>
-        <ListItem key={index} className={`low-priority part ${activitiesInCurrentCategory().filter(highPriorityActivities).length + index}`}>
-            <ListItemText primaryTypographyProps={{ color: 'textSecondary' }}>{name}</ListItemText>
-        </ListItem>)
-
-    return <PageWrapper className="prioritize-activities-top" back={{ link: PRIORITIZE_ACTIVITIES }} forward={{ disabled: !activitesInDay.filter(highPriorityActivities).every(({ priorityIndex }) => priorityIndex !== undefined), link: OVERVIEW }} >
+    return <PageWrapper className="prioritize-activities-top" back={{ link: PRIORITIZE_ACTIVITIES }} forward={{ link: OVERVIEW_2 }} >
         <div>Drag and drop to identify the priority of each <strong>{priorityNames.must_have}</strong> activity in this section of your day</div>
         <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="droppable">
