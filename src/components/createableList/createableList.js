@@ -3,6 +3,7 @@ import { List, ListItem, IconButton } from "@material-ui/core";
 import TextInput from "../input/textInput";
 import DeleteIcon from '@material-ui/icons/Delete';
 import { generateId } from "../../utils/id";
+import { isEqual } from "lodash";
 
 const defaultRenderCurrentList = ({ list, onChange, onDelete }) => list.map((part, index) => <ListItem className="part" key={index}>
     <TextInput label={index + 1} text={part.name} onChange={onChange(index)} />
@@ -16,7 +17,7 @@ export const CreateableList = ({ renderCurrentList = defaultRenderCurrentList, l
     const [editableList, setEditableList] = useState(list);
     const newItemInput = useRef();
     useEffect(() => { setEditableList(list) }, [list]);
-    useEffect(() => { onChange(editableList) }, [editableList]);
+    useEffect(() => {!isEqual(list, editableList) && onChange(editableList); }, [editableList]);
 
     const defaultCreateNewItem = value => {
         if (createNewItem) {

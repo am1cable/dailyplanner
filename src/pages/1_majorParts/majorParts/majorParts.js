@@ -12,7 +12,7 @@ export const MajorParts = () => {
     const dispatch = useDispatch();
     const dispatchSaveDay = (majorParts) => dispatch(saveDay({ ...currentDay, majorParts }))
     const saveDayDebounce = useCallback(debounce(dispatchSaveDay, 1000, { leading: true, trailing: true }));
-    const createNewMajorPart = ({ list, id, value }) => [...list, { name: value, id, benefits: [], obstacles: [], problems: [] }];
+    const createNewMajorPart = ({ list, id, value }) => [...list, { name: value, id, benefits: [], }];
 
     return <PageWrapper className="major-parts" back={{ link: TYPE_OF_DAY }} forward={{ disabled: !currentDay.majorParts || currentDay.majorParts.length === 0, link: MAJOR_PARTS_DURATION }}>
         <div>What are the major parts of this day? Maximum 7.</div>
