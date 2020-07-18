@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import PageWrapper from "../../../components/pageWrapper/pageWrapper";
 import { PRIORITIZE_ACTIVITIES, OVERVIEW_2 } from "../../pageUrls";
 import { useSelector, useDispatch } from "react-redux";
-import { List, ListItem, ListItemText, RootRef, Portal, ListItemAvatar, Avatar } from "@material-ui/core";
+import { List, ListItem, ListItemText, RootRef, Portal, ListItemAvatar, Avatar, Typography } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import { saveDay } from "../../../actions";
 import debounce from 'lodash/debounce';
@@ -11,7 +11,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import "./prioritizeActivitiesTop.scss";
 import { priorities, priorityNames } from "../../../utils/activities";
 import { prioritizedActivities } from "../../../utils/activities";
-import {localStorageId} from "../prioritizeActivities/prioritizeActivities";
+import { localStorageId } from "../prioritizeActivities/prioritizeActivities";
 
 const useStyles = makeStyles((theme) => ({
     top3Icon: {
@@ -35,8 +35,7 @@ export const PrioritizeActivitiesTop = () => {
     const highPriorityActivities = ({ priority }) => priority === priorities.indexOf(priorityNames.must_have);
     const activitiesInCurrentCategory = (targetCategory = currentCategory) => activitesInDay.filter(({ categoryId }) => categoryId === targetCategory.id);
 
-    useEffect(() => { saveDayDebounce() }, [activitesInDay])
-
+    useEffect(() => { saveDayDebounce() }, [activitesInDay]);
     const handleCategoryChange = (newCategory) => {
         localStorage.setItem(localStorageId, newCategory.id);
         setCurrentCategory(newCategory);
@@ -73,19 +72,24 @@ export const PrioritizeActivitiesTop = () => {
             </PortalAwareDraggable>
         }</Draggable>)
 
+    const renderDragDropPriority = () => <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="droppable">
+            {(provided, snapshot) =>
+                <RootRef rootRef={provided.innerRef}>
+                    <List>
+                        {renderHighPriorityActivities()}
+                        {provided.placeholder}
+                    </List>
+                </RootRef>}
+        </Droppable>
+    </DragDropContext>
+
     return <PageWrapper className="prioritize-activities-top" back={{ link: PRIORITIZE_ACTIVITIES }} forward={{ link: OVERVIEW_2 }} >
         <div>Drag and drop to identify the priority of each <strong>{priorityNames.must_have}</strong> activity in this section of your day</div>
-        <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId="droppable">
-                {(provided, snapshot) =>
-                    <RootRef rootRef={provided.innerRef}>
-                        <List>
-                            {renderHighPriorityActivities()}
-                            {provided.placeholder}
-                        </List>
-                    </RootRef>}
-            </Droppable>
-        </DragDropContext>
+        {activitiesInCurrentCategory().filter(highPriorityActivities).length > 0 ?
+            renderDragDropPriority() :
+            <Typography color="textSecondary">You have no <strong>{priorityNames.must_have}</strong> priority activities in this part of your day!</Typography>
+        }
         {renderCategoryMenu()}
     </PageWrapper>
 }
