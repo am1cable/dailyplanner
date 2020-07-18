@@ -17,7 +17,10 @@ export const CreateableList = ({ renderCurrentList = defaultRenderCurrentList, l
     const [editableList, setEditableList] = useState(list);
     const newItemInput = useRef();
     useEffect(() => { setEditableList(list) }, [list]);
-    useEffect(() => {!isEqual(list, editableList) && onChange(editableList); }, [editableList]);
+    useEffect(() => {
+        !isEqual(list, editableList) && onChange(editableList);
+        newItemInput.current && newItemInput.current.focus();
+    }, [editableList]);
 
     const defaultCreateNewItem = value => {
         if (createNewItem) {
@@ -25,7 +28,6 @@ export const CreateableList = ({ renderCurrentList = defaultRenderCurrentList, l
         } else {
             setEditableList([...editableList, { name: value, id: generateId() }]);
         }
-        setTimeout(() => { newItemInput.current && newItemInput.current.focus(); }, 50);
     }
     const defaultUpdateItem = index => value => {
         if (updateItem) {
@@ -43,7 +45,7 @@ export const CreateableList = ({ renderCurrentList = defaultRenderCurrentList, l
         setEditableList([...newList]);
     }
 
-    return <List>{editableList && renderCurrentList({ list: editableList, onChange: defaultUpdateItem, onDelete: removeItem })}
+    return <List>{editableList && editableList.length > 0 && renderCurrentList({ list: editableList, onChange: defaultUpdateItem, onDelete: removeItem })}
         {(!maxItems || editableList.length < maxItems) && <ListItem>
             <TextInput forwardedRef={newItemInput} autoFocus text="" label={editableList.length + 1} clearInput onBlur={defaultCreateNewItem} />
         </ListItem>}
