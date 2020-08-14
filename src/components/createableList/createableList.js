@@ -16,15 +16,21 @@ const defaultRenderCurrentList = ({ list, onChange, onDelete }) => list.map((par
 export const CreateableList = ({ renderCurrentList = defaultRenderCurrentList, list = [], maxItems, onChange, createNewItem, updateItem }) => {
     const [editableList, setEditableList] = useState(list);
     const newItemInput = useRef();
-    useEffect(() => { setEditableList(list) }, [list]);
+
+    // useEffect(() => {
+    //     debugger;
+    //     !isEqual(list, editableList) && setEditableList(list)
+    // }, [list]);
+
     useEffect(() => {
         !isEqual(list, editableList) && onChange(editableList);
         newItemInput.current && newItemInput.current.focus();
     }, [editableList]);
 
+
     const defaultCreateNewItem = value => {
         if (createNewItem) {
-            setEditableList(createNewItem({ value, list, id: generateId() }));
+            setEditableList(createNewItem({ value, list: editableList, id: generateId() }));
         } else {
             setEditableList([...editableList, { name: value, id: generateId() }]);
         }

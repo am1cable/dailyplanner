@@ -21,3 +21,5 @@ export const FIRST_STEPS = "/first-steps";
 export const TIME_TO_ACT = "/time-to-act";
 export const CONFIDENCE_CHECK_PROBLEM = "/confidence-check-problem";
 export const PART_OF_DAY_LOOPING = "/part-of-day-looping"
+
+export const STRUCTURE = "/structure";
