@@ -64,6 +64,9 @@ export const ContextWrapper = ({ context, children }) => {
 
 export const getDayType = (currentStep) => currentStep > steps.set_is_achievable ? "real" : "ideal";
 
+
+//TODO: bug: have to refresh the page to be able to click forwards and it to work .... bweh?
+// something with useSelector, maybe if i put current step inside an object idek
 export const StructureManager = () => {
     const currentStep = useSelector(state => state.currentStepData);
     const currentDayData = useSelector(state => state.currentDayData);

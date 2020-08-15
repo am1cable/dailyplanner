@@ -17,7 +17,10 @@ export const TotalHours = ({ currentDay, saveDay }) => {
     const isUnderHours = () => calculateHours() < 24;
 
     const sleepTitle = "Sleep";
-    const getTitle = (duration) => (currentDay.majorParts.find(part => part.id === duration.id) || []).name || sleepTitle;
+    const getTitle = (duration) => {
+        const part = (currentDay.majorParts.find(part => part.id === duration.id) || []);
+        return part.name || part.placeholder || sleepTitle;
+    }
     const isSleep = (duration) => getTitle(duration) === sleepTitle;
 
     const renderDisplayTotals = () => <List>

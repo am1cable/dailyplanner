@@ -5,25 +5,27 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { generateId } from "../../utils/id";
 import { isEqual } from "lodash";
 
-const defaultRenderCurrentList = ({ list, onChange, onDelete }) => list.map((part, index) => <ListItem className="part" key={index}>
-    <TextInput label={index + 1} text={part.name} onChange={onChange(index)} />
+const defaultRenderCurrentList = ({ list, onChange, onDelete }) => list.map(({name, placeholder}, index) => <ListItem className="part" key={index}>
+    <TextInput placeholder={placeholder} label={index + 1} text={name} onChange={onChange(index)} />
     <IconButton onClick={onDelete(index)} aria-label="delete">
         <DeleteIcon fontSize="small" />
     </IconButton>
 </ListItem>);
 
 
-export const CreateableList = ({ renderCurrentList = defaultRenderCurrentList, list = [], maxItems, onChange, createNewItem, updateItem }) => {
-    const [editableList, setEditableList] = useState(list);
+export const CreateableList = ({ renderCurrentList = defaultRenderCurrentList, list, defaultList = [], maxItems, onChange, createNewItem, updateItem }) => {
+    const [editableList, setEditableList] = useState(list || defaultList.map(({name, ...props}) => ({placeholder: name, ...props})));
     const newItemInput = useRef();
 
+    // i dont actually think i need this??? idk. obviously if the list value changes without the editable list changes. but then the component should be on a diff page
+    // and re-created .... idk ....
     // useEffect(() => {
     //     debugger;
     //     !isEqual(list, editableList) && setEditableList(list)
     // }, [list]);
 
     useEffect(() => {
-        !isEqual(list, editableList) && onChange(editableList);
+        !isEqual((list || defaultList), editableList) && onChange(editableList);
         newItemInput.current && newItemInput.current.focus();
     }, [editableList]);
 

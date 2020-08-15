@@ -13,7 +13,7 @@ export const MajorParts = ({currentDay, templateDay, saveDay}) => {
 
     return <PageWrapper className="major-parts" forward={{ disabled: !currentDay.majorParts || currentDay.majorParts.length === 0 }}>
         <div>What are the major parts of this day? Maximum 7.</div>
-        <CreateableList list={currentDay.majorParts} maxItems={7} onChange={saveDayDebounce} createNewItem={createNewMajorPart} />
+        <CreateableList list={currentDay.majorParts} defaultList={templateDay.majorParts} maxItems={7} onChange={saveDayDebounce} createNewItem={createNewMajorPart} />
     </PageWrapper>
 }
 export default MajorParts

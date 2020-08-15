@@ -5,16 +5,15 @@ import "./majorParts.scss";
 import isEqual from "lodash/isEqual";
 import { List, ListItem, ListItemText } from "@material-ui/core";
 
-export const updateMajorPartDurations = (majorPartDurations, templateDay, index, callback) => ({ ...props }) => {
+export const updateMajorPartDurations = (majorPartDurations, index, callback) => ({ ...props }) => {
     const newMajorPartDurations = [...majorPartDurations];
     const oldMajorPartDurations = newMajorPartDurations.splice(index, 1);
     newMajorPartDurations.splice(index, 0, { id: oldMajorPartDurations[0].id, ...props })
     callback(newMajorPartDurations);
 }
 
-
-export const MajorPartsDuration = ({currentDay, saveDay}) => {
-    const getDurations = () => (currentDay.majorParts || []).map(part => ((currentDay.majorPartDurations || []).find(duration => duration.id === part.id) || { id: part.id, hours: 0, minutes: 0 }));
+export const MajorPartsDuration = ({currentDay, templateDay, saveDay}) => {
+    const getDurations = () => (currentDay.majorParts).map(part => ((currentDay.majorPartDurations || templateDay.majorPartDurations).find(duration => duration.id === part.id) || { id: part.id, hours: 0, minutes: 0 }));
     const [majorPartDurations, setMajorPartDurations] = useState(getDurations());
     const hasHours = useMemo(() => majorPartDurations.every(duration => (duration.hours !== 0)), [majorPartDurations]);
 
