@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import HoursOfSleep from "./hoursOfSleep/hoursOfSleep";
 import MajorParts from "./majorParts/majorParts";
@@ -8,7 +8,7 @@ import TypeOfDay from "./typeOfDay/typeOfDay";
 import TotalHours from "./totalHours/totalHours";
 import FinalPlan from "./finalPlan/finalPlan";
 import { setStep, saveDay } from "../../actions";
-import StructureContext from "../../components/context/structureContext";
+import ContextWrapper from "../../components/context/contextWrapper";
 import HowAchievable from "./howAchievable/howAchievable";
 import RealOrIdeal from "./realOrIdeal/realOrIdeal";
 
@@ -58,18 +58,6 @@ export const getCurrentPage = currentStep => {
     }
 }
 
-export const ContextWrapper = ({ context, children }) => {
-    const [structureContext, setStructureContext] = useState(context);
-
-    useEffect(() => {
-        setStructureContext(context);
-    }, [context])
-
-    return <StructureContext.Provider value={structureContext}>
-        {children}
-    </StructureContext.Provider>
-}
-
 export const getDayType = (currentStep) => currentStep > steps.set_is_achievable ? "redone" : "initial";
 
 export const StructureManager = () => {
@@ -77,10 +65,12 @@ export const StructureManager = () => {
     const currentDayData = useSelector(state => state.currentDayData);
     const dispatch = useDispatch();
     const currentDayFromStep = currentStep => currentDayData[getDayType(currentStep)] || {};
+    
+    useEffect(() => {
+        (currentStepData.step < steps.set_type_of_day || currentStepData.step > steps.show_final_plan) && dispatch(setStep(steps.set_type_of_day));
+    }, []);
 
     const setNextStep = () => {
-        console.log(currentStepData)
-        console.log(currentStepData.step)
         const nextStep = Object.values(steps)[currentStepData.step];
         nextStep && dispatch(setStep(nextStep))
     };

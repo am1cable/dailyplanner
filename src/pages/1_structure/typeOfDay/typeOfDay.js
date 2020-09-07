@@ -6,7 +6,7 @@ import { Dropdown } from "../../../components/input/dropdown/dropdown";
 import TextInput from "../../../components/input/textInput";
 import { MAJOR_PARTS } from "../../pageUrls";
 
-export const TypeOfDay = ({currentDay} = {currentDay: {}}) => {
+export const TypeOfDay = ({currentDay}) => {
     const pageData = useSelector(state => state.pageData);
     const dispatch = useDispatch();
 
@@ -23,7 +23,7 @@ export const TypeOfDay = ({currentDay} = {currentDay: {}}) => {
         if (props.dayTypeChoice !== "") {
             dispatch(saveAll({ ...props, dayTypeDetails: [...props.dayTypeDetails.filter(details => details.type !== currentDay.type), currentDay] }));
             const typeAndName = {type: props.dayTypeChoice, name: props.dayTypeOptions[props.dayTypeChoice]};
-            dispatch(setDay(props.dayTypeDetails.find(detail => detail.type === props.dayTypeChoice) || { ...typeAndName, ideal: typeAndName, real: typeAndName }));
+            dispatch(setDay(props.dayTypeDetails.find(detail => detail.type === props.dayTypeChoice) || { ...typeAndName, initial: typeAndName, redone: typeAndName }));
         }
     }
 

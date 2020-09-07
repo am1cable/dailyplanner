@@ -23,3 +23,4 @@ export const CONFIDENCE_CHECK_PROBLEM = "/confidence-check-problem";
 export const PART_OF_DAY_LOOPING = "/part-of-day-looping"
 
 export const STRUCTURE = "/structure";
+export const STRUCTURE_DEBRIEF = "/structure-debrief";

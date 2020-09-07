@@ -7,7 +7,8 @@ import PageWrapper from "../../../components/pageWrapper/pageWrapper";
 import { getScheduleByHours } from "../../../utils/time";
 import { ScheduleTimelineItem } from "../../../components/dayTimeline/dayTimeline";
 import { saveDay, setStep, setDay } from "../../../actions";
-import { ContextWrapper, steps } from "../structureManager";
+import { steps } from "../1_Manager";
+import ContextWrapper from "../../../components/context/contextWrapper";
 
 export const HowAchievable = ({}) => {
     const currentDayData = useSelector(state => state.currentDayData);
@@ -24,14 +25,14 @@ export const HowAchievable = ({}) => {
 
     const renderScheduleTimeline = (schedule, index) =>
         <ScheduleTimelineItem key={index}
-            hasConnector={index < getScheduleByHours(currentDayData.ideal).length - 1}
+            hasConnector={index < getScheduleByHours(currentDayData.initial).length - 1}
             {...schedule}
         />
     const setNextStep = () => {
         if (currentDayData.initialDayConfidence < 100) {
             dispatch(setStep(steps.set_major_parts_of_real));
         } else {
-            dispatch(setDay({...currentDayData, "final": currentDayData.ideal}));
+            dispatch(setDay({...currentDayData, "final": currentDayData.initial}));
             dispatch(setStep(steps.show_final_plan));
         }
     };
@@ -42,7 +43,7 @@ export const HowAchievable = ({}) => {
                 <Grid item>
                     <Typography variant="h4" gutterBottom>{currentDayData.name}</Typography>
                     <Timeline>
-                        {getScheduleByHours(currentDayData.ideal).map(renderScheduleTimeline)}
+                        {getScheduleByHours(currentDayData.initial).map(renderScheduleTimeline)}
                     </Timeline>
                 </Grid>
                 <Grid item>
