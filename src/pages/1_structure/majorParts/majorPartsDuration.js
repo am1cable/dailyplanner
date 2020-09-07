@@ -13,7 +13,7 @@ export const updateMajorPartDurations = (majorPartDurations, index, callback) =>
 }
 
 export const MajorPartsDuration = ({currentDay, templateDay, saveDay}) => {
-    const getDurations = () => (currentDay.majorParts).map(part => ((currentDay.majorPartDurations || templateDay.majorPartDurations).find(duration => duration.id === part.id) || { id: part.id, hours: 0, minutes: 0 }));
+    const getDurations = () => (currentDay.majorParts).map(part => ((currentDay.majorPartDurations || templateDay.majorPartDurations || []).find(duration => duration.id === part.id) || { id: part.id, hours: 0, minutes: 0 }));
     const [majorPartDurations, setMajorPartDurations] = useState(getDurations());
     const hasHours = useMemo(() => majorPartDurations.every(duration => (duration.hours !== 0)), [majorPartDurations]);
 

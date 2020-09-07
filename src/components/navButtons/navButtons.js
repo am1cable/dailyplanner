@@ -7,13 +7,15 @@ const NavButtonLinks = ({ text, link, ...props }) => <NavButton {...props} compo
 
 const NavButton = ({ children, ...props }) => <Button {...props}>{children}</Button>
 
-export const NavButtons = ({ back, forward }) => {
+const emptyDirection = { disabled: true, link: "/" }
+
+export const NavButtons = ({ back = emptyDirection, forward = emptyDirection }) => {
     return <StructureContext.Consumer>
         {({ onNavigateForwards }) => <ButtonGroup color={"primary"} size="large" variant="contained">
-            {/* {back && <NavButton {...back}>
+            {/* {back != emptyDirection && <NavButton {...back}>
                 {back.name ? `back to ${back.name}` : 'back'}
             </NavButton>} */}
-            {forward && <NavButton {...forward} onClick={onNavigateForwards}>
+            {forward != emptyDirection && <NavButton {...forward} onClick={onNavigateForwards}>
                 {forward.name ? `forward to ${forward.name}` : 'forward'}
             </NavButton>}
         </ButtonGroup>

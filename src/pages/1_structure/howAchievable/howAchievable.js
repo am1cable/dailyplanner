@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Grid, Typography } from "@material-ui/core";
 import { Timeline } from "@material-ui/lab";
@@ -6,43 +6,49 @@ import ConfidenceSlider from "../../../components/confidenceSlider/confidenceSli
 import PageWrapper from "../../../components/pageWrapper/pageWrapper";
 import { getScheduleByHours } from "../../../utils/time";
 import { ScheduleTimelineItem } from "../../../components/dayTimeline/dayTimeline";
-import { saveDay, setStep } from "../../../actions";
+import { saveDay, setStep, setDay } from "../../../actions";
 import { ContextWrapper, steps } from "../structureManager";
 
-export const HowAchievable = ({ }) => {
-    const currentDay = useSelector(state => state.currentDayData);
+export const HowAchievable = ({}) => {
+    const currentDayData = useSelector(state => state.currentDayData);
     const dispatch = useDispatch();
+    const defaultIdealConfidence = 75;
+
+    useEffect(() => {
+        if (!currentDayData.initialDayConfidence) dispatch(saveDay({ ...currentDayData, initialDayConfidence: defaultIdealConfidence }));
+    }, []);
 
     const handleConfidenceChange = (newValue) => {
-        dispatch(saveDay({ ...currentDay, idealDayConfidence: newValue }));
+        dispatch(saveDay({ ...currentDayData, initialDayConfidence: newValue }));
     }
 
     const renderScheduleTimeline = (schedule, index) =>
         <ScheduleTimelineItem key={index}
-            hasConnector={index < getScheduleByHours(currentDay.ideal).length - 1}
+            hasConnector={index < getScheduleByHours(currentDayData.ideal).length - 1}
             {...schedule}
         />
     const setNextStep = () => {
-        if (currentDay.idealDayConfidence < 100) {
+        if (currentDayData.initialDayConfidence < 100) {
             dispatch(setStep(steps.set_major_parts_of_real));
         } else {
-            dispatch(setStep(steps.show_start_times));
+            dispatch(setDay({...currentDayData, "final": currentDayData.ideal}));
+            dispatch(setStep(steps.show_final_plan));
         }
     };
 
     return <ContextWrapper context={{ onNavigateForwards: setNextStep }}>
-        <PageWrapper className="major-parts major-parts-achievable" forward={{ disabled: !currentDay.idealDayConfidence }}>
+        <PageWrapper className="major-parts major-parts-achievable" forward={{ disabled: false }}>
             <Grid container spacing={3} direction="row">
                 <Grid item>
-                    <Typography variant="h4" gutterBottom>{currentDay.name}</Typography>
+                    <Typography variant="h4" gutterBottom>{currentDayData.name}</Typography>
                     <Timeline>
-                        {getScheduleByHours(currentDay.ideal).map(renderScheduleTimeline)}
+                        {getScheduleByHours(currentDayData.ideal).map(renderScheduleTimeline)}
                     </Timeline>
                 </Grid>
                 <Grid item>
                     <div>How acheivable is this goal rn (that's kid slang for right now)?</div>
                     <div>
-                        <ConfidenceSlider onChange={handleConfidenceChange} />
+                        <ConfidenceSlider defaultValue={defaultIdealConfidence} onChange={handleConfidenceChange} />
                     </div>
                 </Grid>
             </Grid>

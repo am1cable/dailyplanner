@@ -25,10 +25,10 @@ export const defaultConfidenceChoices = [
 ];
 
 
-export const ConfidenceSlider = ({ onChange, confidenceChoices = defaultConfidenceChoices }) => {
+export const ConfidenceSlider = ({ onChange, defaultValue = 75, confidenceChoices = defaultConfidenceChoices }) => {
     const handleChange = (e, newValue) => onChange(newValue); 
     return <Slider
-        defaultValue={75}
+        defaultValue={defaultValue}
         step={null}
         onChange={handleChange}
         marks={confidenceChoices}

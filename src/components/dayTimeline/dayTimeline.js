@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export const ScheduleTimelineItem = ({ onClick, id, name = "Sleep", hour, minutes, ampm, hasConnector = false, selected }) => {
+export const ScheduleTimelineItem = ({ onClick, id, name = "Sleep", hour, minutes, ampm, hasConnector = false, selected, colored }) => {
     const classes = useStyles();
     const isSleep = () => name === "Sleep";
     const handleOnClick = () => {
@@ -20,7 +20,7 @@ export const ScheduleTimelineItem = ({ onClick, id, name = "Sleep", hour, minute
     const canClick = () => !isSleep() && !!onClick;
     return <TimelineItem className="day-timeline-item">
         <TimelineSeparator>
-            <TimelineDot color={selected ? "primary" : undefined}
+            <TimelineDot color={selected || colored ? "primary" : undefined}
                 variant={(canClick() || !isSleep()) ? "default" : "outlined"}
                 className={classes.dot}
                 style={{ cursor: canClick() ? "pointer" : "default" }}
