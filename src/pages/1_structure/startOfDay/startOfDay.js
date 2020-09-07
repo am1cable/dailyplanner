@@ -6,7 +6,7 @@ import { Dropdown } from "../../../components/input/dropdown/dropdown";
 import "./startOfDay.scss";
 import { hourOptionsStartOfDay, dayPeriod } from "../../../utils/time";
 import { useDispatch, useSelector } from "react-redux";
-import { setStep } from "../../../actions";
+import { setStep, setDay } from "../../../actions";
 import { steps } from "../1_Manager";
 import ContextWrapper from "../../../components/context/contextWrapper";
 
@@ -25,7 +25,7 @@ export const StartOfDay = ({ currentDay, templateDay, saveDay }) => {
     }, [startOfDayPeriod])
 
     const setNextStep = () => {
-        if (!currentDayData.initialDayConfidence){
+        if (!currentDayData.initialDayConfidence && currentDayData.initialDayConfidence !== 0){
             dispatch(setStep(steps.set_is_achievable));
         }
         else if (currentDayData.initialDayConfidence >= 25) {
