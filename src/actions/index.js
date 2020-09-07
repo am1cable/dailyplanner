@@ -16,3 +16,8 @@ export const setDay = data => ({
     type: 'SET_CURRENT_DAY_DATA',
     data
 })
+
+export const setStep = data => ({
+    type: 'SET_CURRENT_STEP',
+    data
+})

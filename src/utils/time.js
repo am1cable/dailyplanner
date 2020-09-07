@@ -23,9 +23,9 @@ const getStartOfDayAsHour = (currentDay) => ({
 export const getScheduleByHours = (currentDay) => {
     const times = calculateTime(currentDay)
     return times.reduce((timeline, currentActivity, index) => {
-        const name = (currentDay.majorParts.find(part => part.id === currentActivity.id) || []).name;
+        const part = (currentDay.majorParts.find(part => part.id === currentActivity.id) || []);
         if (timeline.length === 0) {
-            timeline.push({ ...getStartOfDayAsHour(currentDay), id: currentActivity.id, name: name });
+            timeline.push({ ...getStartOfDayAsHour(currentDay), id: currentActivity.id, name: (part.name || part.placeholder) });
         } else {
             const prevActivityStart = timeline[timeline.length - 1];
             const previousActivity = times[index - 1];
@@ -36,7 +36,7 @@ export const getScheduleByHours = (currentDay) => {
                 newActivityStartampm = prevActivityStart.ampm === "am" ? "pm" : "am";
             }
             
-            timeline.push({ hour: newActivityStartHour, ampm: newActivityStartampm, id: currentActivity.id, name: name });
+            timeline.push({ hour: newActivityStartHour, ampm: newActivityStartampm, id: currentActivity.id, name: (part.name || part.placeholder) });
         }
         return timeline;
     }, [])

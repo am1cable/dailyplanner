@@ -5,27 +5,37 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { generateId } from "../../utils/id";
 import { isEqual } from "lodash";
 
-const defaultRenderCurrentList = ({ list, onChange, onDelete }) => list.map((part, index) => <ListItem className="part" key={index}>
-    <TextInput label={index + 1} text={part.name} onChange={onChange(index)} />
+const defaultRenderCurrentList = ({ list, onChange, onDelete }) => list.map(({name, placeholder}, index) => <ListItem className="part" key={index}>
+    <TextInput placeholder={placeholder} label={index + 1} text={name} onChange={onChange(index)} />
     <IconButton onClick={onDelete(index)} aria-label="delete">
         <DeleteIcon fontSize="small" />
     </IconButton>
 </ListItem>);
 
 
-export const CreateableList = ({ renderCurrentList = defaultRenderCurrentList, list = [], maxItems, onChange, createNewItem, updateItem }) => {
-    const [editableList, setEditableList] = useState(list);
+export const CreateableList = ({ renderCurrentList = defaultRenderCurrentList, list, defaultList = [], maxItems, onChange, createNewItem, updateItem }) => {
+    const [editableList, setEditableList] = useState(list || defaultList.map(({name, ...props}) => ({placeholder: name, ...props})));
     const newItemInput = useRef();
-    useEffect(() => { setEditableList(list) }, [list]);
-    useEffect(() => {!isEqual(list, editableList) && onChange(editableList); }, [editableList]);
+
+    // i dont actually think i need this??? idk. obviously if the list value changes without the editable list changes. but then the component should be on a diff page
+    // and re-created .... idk ....
+    // useEffect(() => {
+    //     debugger;
+    //     !isEqual(list, editableList) && setEditableList(list)
+    // }, [list]);
+
+    useEffect(() => {
+        !isEqual((list || defaultList), editableList) && onChange(editableList);
+        newItemInput.current && newItemInput.current.focus();
+    }, [editableList]);
+
 
     const defaultCreateNewItem = value => {
         if (createNewItem) {
-            setEditableList(createNewItem({ value, list, id: generateId() }));
+            setEditableList(createNewItem({ value, list: editableList, id: generateId() }));
         } else {
             setEditableList([...editableList, { name: value, id: generateId() }]);
         }
-        setTimeout(() => { newItemInput.current && newItemInput.current.focus(); }, 50);
     }
     const defaultUpdateItem = index => value => {
         if (updateItem) {
@@ -43,7 +53,7 @@ export const CreateableList = ({ renderCurrentList = defaultRenderCurrentList, l
         setEditableList([...newList]);
     }
 
-    return <List>{editableList && renderCurrentList({ list: editableList, onChange: defaultUpdateItem, onDelete: removeItem })}
+    return <List>{editableList && editableList.length > 0 && renderCurrentList({ list: editableList, onChange: defaultUpdateItem, onDelete: removeItem })}
         {(!maxItems || editableList.length < maxItems) && <ListItem>
             <TextInput forwardedRef={newItemInput} autoFocus text="" label={editableList.length + 1} clearInput onBlur={defaultCreateNewItem} />
         </ListItem>}

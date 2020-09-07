@@ -1,9 +1,9 @@
-import { TextField } from "@material-ui/core"
+import { TextField, InputAdornment } from "@material-ui/core"
 import React, { useState, useEffect, useRef } from "react";
 import "./textInput.scss";
 
-export const TextInput = ({ text = "", forwardedRef, label, onBlur = () => {}, onChange = () => {}, clearInput = false, className, ...props }) => {
-    const [value, setValue] = useState(text);
+export const TextInput = ({ text, forwardedRef, label, onBlur = () => { }, onChange = () => { }, clearInput = false, className, placeholder, ...props }) => {
+    const [value, setValue] = useState(text ? text : placeholder ? undefined : "");
     const handleChange = e => setValue(e.target.value)
     const textInputRef = forwardedRef || useRef();
     const catchReturn = (e) => {
@@ -27,7 +27,15 @@ export const TextInput = ({ text = "", forwardedRef, label, onBlur = () => {}, o
         return sendValue;
     }, [value]);
 
-    return <TextField {...props} inputRef={textInputRef} onKeyPress={catchReturn} className={`text-input${className ? " " + className : ''}`} onBlur={cleanUp} label={label} value={value} onChange={handleChange} />;
+    return <TextField {...props} placeholder={placeholder} InputProps={{
+        placeholder: placeholder,
+        startAdornment: <InputAdornment position="start">{label}</InputAdornment>
+    }} inputRef={textInputRef}
+        onKeyPress={catchReturn}
+        className={`text-input${className ? " " + className : ''}`}
+        onBlur={cleanUp}
+        value={value}
+        onChange={handleChange} />;
 }
 
 export default TextInput;
