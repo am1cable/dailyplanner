@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Snackbar, Grid, DialogContent, DialogActions, DialogContentText, DialogTitle } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { saveAs } from 'file-saver';
-import { saveAll, saveDay, deleteAll } from "../../actions";
+import { saveAll, saveDay, deleteAll, setStep } from "../../actions";
 import Alert from "@material-ui/lab/Alert";
 import Dialog from '@material-ui/core/Dialog';
 import { useHistory } from "react-router-dom";
@@ -21,6 +21,7 @@ export const ManageData = () => {
     const [deleting, setDeleting] = useState(false);
     const pageData = useSelector(state => state.pageData);
     const currentDay = useSelector(state => state.currentDayData);
+    const currentStep = useSelector(state => state.currentStepData);
     const dispatch = useDispatch();
 
     const importData = (e) => {
@@ -31,6 +32,7 @@ export const ManageData = () => {
             const deEncodedContent = JSON.parse(atob(content));
             dispatch(saveAll({ ...deEncodedContent.pageData }));
             dispatch(saveDay({ ...deEncodedContent.currentDay }));
+            dispatch(setStep(deEncodedContent.currentStep));
             setImported(true);
         };
         fileReader.readAsText(file);
@@ -39,7 +41,8 @@ export const ManageData = () => {
     const exportData = () => {
         const allData = {
             pageData,
-            currentDay
+            currentDay,
+            currentStep
         };
         const blob = new Blob([btoa(JSON.stringify(allData))], { type: "text/plain;charset=utf-8" });
         saveAs(blob, `Daily-Planner-${new Date().toJSON()}.plannerBackup`);
