@@ -1,28 +1,38 @@
 import React from "react";
-import { Grid, Button } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import PageWrapper from "../../../components/pageWrapper/pageWrapper";
-import { useDispatch } from "react-redux";
-import { setStep } from "../../../actions";
-import { steps } from "../1_5_Manager";
+import uniqBy from "lodash/uniqBy";
+import { defaultConfidenceChoices } from "../../../components/confidenceSlider/confidenceSlider";
 
 export const FinalizeDetails = ({ finalDay }) => {
-    const dispatch = useDispatch();
-
-    const changePage = isDay => () => {
-        if (isDay) {
-            dispatch(setStep(steps.completion_rates))
-        } else {
-            dispatch(setStep(steps.finalized_details))
-        }
+    const getLastFeedbackOfType = (feedback) => {
+        const sortedFeedback = feedback.sort((a,b) => a.timestamp - b.timestamp).reverse();
+        const uniqueFeedback = uniqBy(sortedFeedback, value => value.subname+value.name);
+        const sortedUnqiueFeedback = uniqueFeedback.sort((a,b) => {
+            if (a.id !== b.id)
+            {
+                const majorPartsIds = finalDay.majorParts.map(({id}) => id);
+                return majorPartsIds.indexOf(a.id) - majorPartsIds.indexOf(b.id);
+            }
+            else if (!a.subname) return -1;
+            else if (a.subname && !b.subname) return 1;
+            else if (a.subname.includes("h")) return -1;
+            return 1;
+        });
+        return sortedUnqiueFeedback;
     }
 
     return <PageWrapper className="major-parts major-parts-achievable">
-        <div>K thanks!</div>
-        <Grid container spacing={3}>
-            <Grid item>
-                <div>{finalDay.feedback.toString()}</div>
+        <div>Ya feedback:</div>
+        <Grid container spacing={3} direction="column">
+            {getLastFeedbackOfType(finalDay.feedback).map(({name, subname, value}, i) => {
+                    return <Grid item key={i}>
+                        <div> {name} </div>
+                        <div> {subname} </div>
+                        <div> {defaultConfidenceChoices.find(({value: confValue}) => confValue == value).label} </div>
+                        </Grid>
+                })}
             </Grid>
-        </Grid>
     </PageWrapper>
 }
 

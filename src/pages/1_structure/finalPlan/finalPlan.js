@@ -1,6 +1,5 @@
 import React from "react";
 import PageWrapper from "../../../components/pageWrapper/pageWrapper";
-import { START_OF_DAY, LIST_ACTIVITIES } from "../../pageUrls";
 import { Button, Grid, Typography } from "@material-ui/core";
 import { getScheduleByHours, formatTime } from "../../../utils/time";
 import { exportAsPdf } from "../../../utils/pdf";

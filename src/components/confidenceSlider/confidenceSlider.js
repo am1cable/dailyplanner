@@ -30,7 +30,7 @@ export const ConfidenceSlider = ({ onChange, defaultValue = 75, confidenceChoice
     return <Slider
         defaultValue={defaultValue}
         step={null}
-        onChange={handleChange}
+        onChangeCommitted={handleChange}
         marks={confidenceChoices}
     />}
 
