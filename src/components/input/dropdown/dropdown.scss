@@ -1,3 +1,9 @@
 .dropdown{
-    width: 100%
+    width: 100%;
+    .MuiInputLabel-root {
+        font-size: 18px;
+    }       
+    .dropdown-select {
+        font-size: 18px;
+    }
 }

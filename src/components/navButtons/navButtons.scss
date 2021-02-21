@@ -1,0 +1,9 @@
+.navButtons{
+    display: flex;
+    justify-content: center;
+    padding-top: 80px;
+    .MuiButton-contained {
+        border-radius: 20px;
+        min-width: 120px;
+    }
+}
